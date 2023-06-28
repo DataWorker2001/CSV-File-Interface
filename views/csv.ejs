@@ -1,21 +1,18 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>CSV File Content</title>
   <style>
-    body {
-      background-color: rgba(255, 255, 240);
+    body{
+        background-color: rgba(255,255,240);
     }
-
     table {
       border-collapse: collapse;
     }
 
-    th,
-    td {
+    th, td {
       padding: 8px;
       border: 1px solid black;
-      cursor: pointer;
     }
 
     tbody tr:nth-child(even) {
@@ -25,44 +22,8 @@
     tbody tr:last-child {
       border-bottom: none;
     }
-
-    .pagination {
-      margin-top: 10px;
-    }
-
-    .pagination button {
-      padding: 5px 10px;
-      margin-right: 5px;
-      background-color: aquamarine;
-      font-weight: bolder;
-    }
-
-    .sort-icon {
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      margin-left: 5px;
-      opacity: 0.5;
-    }
-
-    .sort-icon.asc {
-      border-bottom: 4px solid black;
-      opacity: 1;
-    }
-
-    .sort-icon.desc {
-      border-top: 4px solid black;
-      opacity: 1;
-    }
-
-    #chart-container {
-      margin-top: 20px;
-    }
   </style>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <a href="/"><button style="background-color: aquamarine; margin: 5px;">Go Back</button></a>
+  <a href="/"><button style="background-color: aqua; padding: 5px; margin: 5px; font-weight: bold;">Go Back</button></a>
 </head>
 <body>
   <h1>CSV File Content</h1>
@@ -70,7 +31,7 @@
   <div>
     <label for="searchInput">Search:</label>
     <input type="text" id="searchInput">
-    <button id="searchButton">Search</button>
+    <button id="searchButton" style="background-color: aquamarine; padding: 5px; margin: 5px; font-weight: bold;">Search</button>
   </div>
 
   <% if (rows && rows.length > 0) { %>
@@ -78,16 +39,13 @@
       <thead>
         <tr>
           <% Object.keys(rows[0]).forEach(function(header) { %>
-            <th class="table-header" data-column="<%= header %>">
-              <%= header %>
-              <span class="sort-icon"></span>
-            </th>
+            <th><%= header %></th>
           <% }) %>
         </tr>
       </thead>
       <tbody>
         <% rows.forEach(function(row, rowIndex) { %>
-          <tr class="table-row">
+          <tr>
             <% Object.entries(row).forEach(function([key, value], columnIndex) { %>
               <td><div style="border: 1px solid black; padding: 4px;"><%= value %></div></td>
             <% }) %>
@@ -99,29 +57,11 @@
     <p>No CSV file content to display.</p>
   <% } %>
 
-  <div class="pagination">
-    <% for (let i = 1; i <= Math.ceil(rows.length / 100); i++) { %>
-      <button class="page-button" data-page="<%= i %>"><%= i %></button>
-    <% } %>
-  </div>
-
-  <div id="chart-container"></div>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
       const searchButton = document.getElementById('searchButton');
-      const tableRows = document.querySelectorAll('.table-row');
-      const tableHeaders = document.querySelectorAll('.table-header');
-
-      const recordsPerPage = 100;
-      let currentPage = 1;
-      let currentSortColumn = '';
-      let isSortAscending = true;
-
-      const pageButtons = document.querySelectorAll('.page-button');
-      const chartContainer = document.getElementById('chart-container');
-      let chart = null;
+      const tableRows = document.querySelectorAll('tbody tr');
 
       searchButton.addEventListener('click', function() {
         const searchText = searchInput.value.trim().toLowerCase();
@@ -130,28 +70,6 @@
         } else {
           filterRows(searchText);
         }
-      });
-
-      tableHeaders.forEach(function(header) {
-        header.addEventListener('click', function() {
-          const column = header.dataset.column;
-          if (column === currentSortColumn) {
-            isSortAscending = !isSortAscending;
-          } else {
-            currentSortColumn = column;
-            isSortAscending = true;
-          }
-          sortRows();
-          updateTableDisplay();
-        });
-      });
-
-      pageButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-          const page = parseInt(button.dataset.page);
-          currentPage = page;
-          updateTableDisplay();
-        });
       });
 
       function filterRows(searchText) {
@@ -169,44 +87,114 @@
             row.style.display = 'none';
           }
         });
-        currentPage = 1; // Reset current page when performing a search
-        updateTableDisplay();
       }
 
       function resetSearch() {
         tableRows.forEach(function(row) {
           row.style.display = '';
         });
-        currentPage = 1; // Reset current page when clearing the search
-        updateTableDisplay();
       }
+    });
+  </script>
+</body>
+</html> -->
 
-      function sortRows() {
-        const sortedRows = Array.from(tableRows).sort(function(row1, row2) {
-          const value1 = row1.querySelectorAll('td')[getColumnIndex(currentSortColumn)].textContent;
-          const value2 = row2.querySelectorAll('td')[getColumnIndex(currentSortColumn)].textContent;
-          if (isSortAscending) {
-            return value1.localeCompare(value2);
-          } else {
-            return value2.localeCompare(value1);
-          }
-        });
-        const tbody = document.querySelector('tbody');
-        sortedRows.forEach(function(row) {
-          tbody.appendChild(row);
-        });
-      }
 
-      function getColumnIndex(column) {
-        const headers = document.querySelectorAll('.table-header');
-        let index = 0;
-        headers.forEach(function(header, i) {
-          if (header.dataset.column === column) {
-            index = i + 1;
-          }
-        });
-        return index;
-      }
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSV File Content</title>
+  <style>
+    body {
+      background-color: rgba(255, 255, 240);
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border: 1px solid black;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    #chart-container {
+      margin-top: 20px;
+    }
+
+  </style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <h1>CSV File Content</h1>
+
+  <div>
+    <label for="searchInput">Search: </label>
+    <input type="text" id="searchInput" placeholder="Enter search text">
+    <button id="searchButton" style="background-color: aquamarine; padding: 5px; margin: 5px; font-weight: bold;">Search</button>
+  </div>  
+
+  <div style="display: flex; justify-content: center;" class="pagination">
+    <% const totalPages = Math.ceil(rows.length / 100); %>
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <button style="background-color: aquamarine; font-weight: bold; margin: 5px; padding: 5px;" class="page-button" data-page="<%= i %>"><%= i %></button>
+    <% } %>
+  </div>
+
+  <% if (rows && rows.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <% Object.keys(rows[0]).forEach(function(key) { %>
+            <th>
+              <div>
+                <%= key %>
+              </div>
+            </th>
+          <% }) %>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <% rows.forEach(function(row, rowIndex) { %>
+          <tr>
+            <% Object.values(row).forEach(function(value, columnIndex) { %>
+              <td>
+                <div style="border: 1px solid black; padding: 4px;">
+                  <%= value %>
+                </div>
+              </td>
+            <% }) %>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No CSV file content to display.</p>
+  <% } %>
+
+  <div id="chart-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const searchButton = document.getElementById('searchButton');
+      const tableBody = document.getElementById('tableBody');
+      const pageButtons = document.querySelectorAll('.page-button');
+      const tableRows = Array.from(tableBody.querySelectorAll('tr'));
+      const chartContainer = document.getElementById('chart-container');
+      let chart;
+
+      const recordsPerPage = 100;
+      let currentPage = 1;
 
       function updateTableDisplay() {
         const startIndex = (currentPage - 1) * recordsPerPage;
@@ -228,23 +216,54 @@
             button.style.fontWeight = 'normal';
           }
         });
+      }
 
-        tableHeaders.forEach(function(header) {
-          const column = header.dataset.column;
-          if (column === currentSortColumn) {
-            const sortIcon = header.querySelector('.sort-icon');
-            sortIcon.classList.remove('asc', 'desc');
-            if (isSortAscending) {
-              sortIcon.classList.add('asc');
-            } else {
-              sortIcon.classList.add('desc');
+      function filterRows(searchText) {
+        tableRows.forEach(function(row) {
+          const cells = row.querySelectorAll('td');
+          let rowMatch = false;
+          cells.forEach(function(cell) {
+            if (cell.textContent.toLowerCase().includes(searchText)) {
+              rowMatch = true;
             }
+          });
+          if (rowMatch) {
+            row.style.display = '';
           } else {
-            const sortIcon = header.querySelector('.sort-icon');
-            sortIcon.classList.remove('asc', 'desc');
+            row.style.display = 'none';
           }
         });
       }
+
+      function resetSearch() {
+        tableRows.forEach(function(row) {
+          row.style.display = '';
+        });
+      }
+
+      searchButton.addEventListener('click', function() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        if (searchText === '') {
+          resetSearch();
+        } else {
+          filterRows(searchText);
+        }
+      });
+
+      pageButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const page = parseInt(button.dataset.page);
+          currentPage = page;
+          updateTableDisplay();
+        });
+      });
+
+      tableBody.addEventListener('click', function(event) {
+        if (event.target.tagName === 'TD') {
+          const column = event.target.cellIndex;
+          drawChart(column);
+        }
+      });
 
       function drawChart(column) {
         const data = new google.visualization.DataTable();
@@ -253,7 +272,7 @@
 
         const countMap = new Map();
         tableRows.forEach(function(row) {
-          const value = row.querySelectorAll('td')[getColumnIndex(column)].textContent;
+          const value = row.querySelectorAll('td')[column].textContent;
           if (countMap.has(value)) {
             countMap.set(value, countMap.get(value) + 1);
           } else {
@@ -283,11 +302,17 @@
 
       google.charts.load('current', { packages: ['corechart'] });
       google.charts.setOnLoadCallback(function() {
-        drawChart(''); // Draw initial chart with an empty column
+        drawChart(0); // Draw initial chart with the first column
       });
 
-      updateTableDisplay(); // Initial table display update
+      updateTableDisplay();
     });
   </script>
 </body>
 </html>
+
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+
+
+
