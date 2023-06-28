@@ -131,6 +131,10 @@
       margin-top: 20px;
     }
 
+    /* Adjust the font size of x-axis tick labels */
+    svg text {
+      font-size: 12px;
+    }
   </style>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
@@ -143,7 +147,7 @@
     <button id="searchButton" style="background-color: aquamarine; padding: 5px; margin: 5px; font-weight: bold;">Search</button>
   </div>  
 
-  <div style="display: flex; justify-content: center;" class="pagination">
+  <div style="display: flex-box; justify-content: center;" class="pagination">
     <% const totalPages = Math.ceil(rows.length / 100); %>
     <% for (let i = 1; i <= totalPages; i++) { %>
       <button style="background-color: aquamarine; font-weight: bold; margin: 5px; padding: 5px;" class="page-button" data-page="<%= i %>"><%= i %></button>
@@ -290,6 +294,9 @@
           height: 400,
           legend: { position: 'none' },
           chartArea: { left: 50, top: 50, right: 20, bottom: 100 },
+          hAxis: {
+            slantedText: false // Display x-axis labels normally
+          }
         };
 
         if (chart) {
@@ -310,6 +317,8 @@
   </script>
 </body>
 </html>
+
+
 
 <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 

@@ -45,6 +45,23 @@ app.get('/delete/:filename', (req, res) => {
   });
 });
 
+app.put('/rename/:filename', express.json(), (req, res) => {
+  const { filename } = req.params;
+  const { newFileName } = req.body;
+
+  const filePath = `uploads/${filename}`;
+  const newFilePath = `uploads/${newFileName}`;
+
+  fs.rename(filePath, newFilePath, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error renaming file');
+    }
+
+    res.sendStatus(200);
+  });
+});
+
 // Start the server
 const port = 3000;
 app.listen(port, () => {

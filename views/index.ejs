@@ -23,7 +23,8 @@
         <li>
           <%= file %>
           <a href="/files/<%= file %>" target="_blank"><button style ="background-color: aquamarine; padding: 8px; margin: 5px;">Open</button></a>
-          <a href="/delete/<%= file %>"><button style ="background-color: aquamarine; padding: 8px; margin: 5px;" onClick = "alertDel()">Delete</button></a>
+          <a href="/delete/<%= file %>"><button style ="background-color: aquamarine; padding: 8px; margin: 5px;" onClick="alertDel()">Delete</button></a>
+          <button style ="background-color: aquamarine; padding: 8px; margin: 5px;" onClick="editFileName('<%= file %>')">Edit</button>
         </li>
       <% }) %>
     </ol>
@@ -34,13 +35,44 @@
   <script>
     // Add your JavaScript code here
     function showAlert() {
-    const fileInput = document.getElementById('csvFileInput');
-    const originalFileName = fileInput.files[0].name;
-    alert(`Selected file: ${originalFileName}`+' uploaded successfully');
-    return (originalFileName);
+      const fileInput = document.getElementById('csvFileInput');
+      const originalFileName = fileInput.files[0].name;
+      alert(`Selected file: ${originalFileName}`+' uploaded successfully');
+      return originalFileName;
     }
+
     function alertDel() {
-      alert("File Deleted successfully!");
+      alert("File deleted successfully!");
+    }
+
+    function editFileName(fileName) {
+      const newFileName = prompt('Enter a new name for the file:', fileName);
+      if (newFileName !== null && newFileName.trim() !== '') {
+        // Send an AJAX request to update the file name on the server-side
+        // You can use fetch or XMLHttpRequest here to send the request
+        // Example using fetch:
+        fetch(`/rename/${fileName}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ newFileName })
+        })
+          .then(response => {
+            if (response.ok) {
+              alert('File name updated successfully!');
+              // Optionally, you can reload the file list or update the UI
+              // with the new file name without refreshing the page
+              location.reload(); // Reload the page to reflect the new file name
+            } else {
+              alert('Failed to update file name!');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the file name!');
+          });
+      }
     }
   </script>
 </body>
