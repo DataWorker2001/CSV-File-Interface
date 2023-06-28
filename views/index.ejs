@@ -10,15 +10,15 @@
   </style>
 </head>
 <body>
-  <h1>Upload a CSV File</h1>
-  <form action="/upload" method="post" enctype="multipart/form-data">
+  <h1 style="color: brown;">Upload a CSV File</h1>
+  <form action="/upload" method="post" enctype="multipart/form-data" style="display: flex; background-color: bisque; color: brown;">
     <input type="file" id="csvFileInput" name="csvFile" accept=".csv">
-    <button type="submit" onclick="showAlert()">Upload</button>
+    <button type="submit" onclick="showAlert()" style="background-color: rgb(170, 230, 230); margin: 5px; padding: 5px;">Upload</button>
   </form>
 
-  <h2>List of Uploaded Files</h2>
+  <h2 style="color: brown;">List of Uploaded Files</h2>
   <% if (files.length > 0) { %>
-    <ol>
+    <ol style="display: flex-box; background-color: pink; color: brown; font-weight: bolder; font-size: larger;">
       <% files.forEach(function(file) { %>
         <li>
           <%= file %>
