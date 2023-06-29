@@ -17,13 +17,11 @@ Open a terminal and navigate to the project directory.
 
 Install the dependencies by running the following command:
 
-shell
-Copy code
+$shell
 npm install
 Start the server by running the following command:
 
-shell
-Copy code
+$shell
 node server.js
 Open your web browser and visit http://localhost:3000 to access the application.
 
