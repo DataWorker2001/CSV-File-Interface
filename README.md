@@ -22,7 +22,7 @@ npm install
 Start the server by running the following command:
 
 $shell
-node server.js
+node server.js</br>
 Open your web browser and visit http://localhost:3000 to access the application.
 
 Folder Structure
