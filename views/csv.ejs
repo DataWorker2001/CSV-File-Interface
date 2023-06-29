@@ -1,105 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>CSV File Content</title>
-  <style>
-    body{
-        background-color: rgba(255,255,240);
-    }
-    table {
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px;
-      border: 1px solid black;
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-  </style>
-  <a href="/"><button style="background-color: aqua; padding: 5px; margin: 5px; font-weight: bold;">Go Back</button></a>
-</head>
-<body>
-  <h1>CSV File Content</h1>
-
-  <div>
-    <label for="searchInput">Search:</label>
-    <input type="text" id="searchInput">
-    <button id="searchButton" style="background-color: aquamarine; padding: 5px; margin: 5px; font-weight: bold;">Search</button>
-  </div>
-
-  <% if (rows && rows.length > 0) { %>
-    <table>
-      <thead>
-        <tr>
-          <% Object.keys(rows[0]).forEach(function(header) { %>
-            <th><%= header %></th>
-          <% }) %>
-        </tr>
-      </thead>
-      <tbody>
-        <% rows.forEach(function(row, rowIndex) { %>
-          <tr>
-            <% Object.entries(row).forEach(function([key, value], columnIndex) { %>
-              <td><div style="border: 1px solid black; padding: 4px;"><%= value %></div></td>
-            <% }) %>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p>No CSV file content to display.</p>
-  <% } %>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const searchButton = document.getElementById('searchButton');
-      const tableRows = document.querySelectorAll('tbody tr');
-
-      searchButton.addEventListener('click', function() {
-        const searchText = searchInput.value.trim().toLowerCase();
-        if (searchText === '') {
-          resetSearch();
-        } else {
-          filterRows(searchText);
-        }
-      });
-
-      function filterRows(searchText) {
-        tableRows.forEach(function(row) {
-          const cells = row.querySelectorAll('td');
-          let rowMatch = false;
-          cells.forEach(function(cell) {
-            if (cell.textContent.toLowerCase().includes(searchText)) {
-              rowMatch = true;
-            }
-          });
-          if (rowMatch) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      }
-
-      function resetSearch() {
-        tableRows.forEach(function(row) {
-          row.style.display = '';
-        });
-      }
-    });
-  </script>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -201,75 +99,82 @@
       const recordsPerPage = 100;
       let currentPage = 1;
 
+      // Function to update the display of the table based on the current page
       function updateTableDisplay() {
         const startIndex = (currentPage - 1) * recordsPerPage;
         const endIndex = startIndex + recordsPerPage;
 
         tableRows.forEach(function(row, index) {
           if (index >= startIndex && index < endIndex) {
-            row.style.display = '';
+            row.style.display = ''; // Show rows within the current page range
           } else {
-            row.style.display = 'none';
+            row.style.display = 'none'; // Hide rows outside the current page range
           }
         });
 
         pageButtons.forEach(function(button) {
           const page = parseInt(button.dataset.page);
           if (page === currentPage) {
-            button.style.fontWeight = 'bold';
+            button.style.fontWeight = 'bold'; // Highlight the current page button
           } else {
-            button.style.fontWeight = 'normal';
+            button.style.fontWeight = 'normal'; // Reset the style for other page buttons
           }
         });
       }
 
+      // Function to filter the rows based on the search text
       function filterRows(searchText) {
         tableRows.forEach(function(row) {
           const cells = row.querySelectorAll('td');
           let rowMatch = false;
           cells.forEach(function(cell) {
             if (cell.textContent.toLowerCase().includes(searchText)) {
-              rowMatch = true;
+              rowMatch = true; // Set rowMatch to true if any cell matches the search text
             }
           });
           if (rowMatch) {
-            row.style.display = '';
+            row.style.display = ''; // Show rows that match the search text
           } else {
-            row.style.display = 'none';
+            row.style.display = 'none'; // Hide rows that do not match the search text
           }
         });
       }
 
+      // Function to reset the search and show all rows
       function resetSearch() {
         tableRows.forEach(function(row) {
-          row.style.display = '';
+          row.style.display = ''; // Show all rows
         });
       }
 
+      // Event listener for the search button
       searchButton.addEventListener('click', function() {
         const searchText = searchInput.value.trim().toLowerCase();
         if (searchText === '') {
-          resetSearch();
+          resetSearch(); // If search text is empty, reset the search and show all rows
         } else {
-          filterRows(searchText);
+          filterRows(searchText); // Filter the rows based on the search text
         }
       });
 
+      // Event listeners for the page buttons
       pageButtons.forEach(function(button) {
         button.addEventListener('click', function() {
           const page = parseInt(button.dataset.page);
-          currentPage = page;
-          updateTableDisplay();
+          currentPage = page; // Set the current page to the clicked page
+          updateTableDisplay(); // Update the table display based on the current page
         });
       });
 
+      // Event listener for table cell click to draw a chart
       tableBody.addEventListener('click', function(event) {
         if (event.target.tagName === 'TD') {
-          const column = event.target.cellIndex;
-          drawChart(column);
+          const column = event.target.cellIndex; // Get the column index of the clicked cell
+          drawChart(column); // Draw a chart based on the clicked column
         }
       });
 
+      // Function to draw a chart based on the column index
       function drawChart(column) {
         const data = new google.visualization.DataTable();
         data.addColumn('string', 'Value');
@@ -279,14 +184,14 @@
         tableRows.forEach(function(row) {
           const value = row.querySelectorAll('td')[column].textContent;
           if (countMap.has(value)) {
-            countMap.set(value, countMap.get(value) + 1);
+            countMap.set(value, countMap.get(value) + 1); // Count the occurrences of each value in the column
           } else {
-            countMap.set(value, 1);
+            countMap.set(value, 1); // Initialize the count for a new value
           }
         });
 
         countMap.forEach(function(count, value) {
-          data.addRow([value, count]);
+          data.addRow([value, count]); // Add the value and count to the chart data
         });
 
         const options = {
@@ -301,11 +206,11 @@
         };
 
         if (chart) {
-          chart.clearChart();
+          chart.clearChart(); // Clear the chart if it already exists
         }
 
         chart = new google.visualization.ColumnChart(chartContainer);
-        chart.draw(data, options);
+        chart.draw(data, options); // Draw the column chart
       }
 
       google.charts.load('current', { packages: ['corechart'] });
@@ -313,11 +218,12 @@
         drawChart(0); // Draw initial chart with the first column
       });
 
-      updateTableDisplay();
+      updateTableDisplay(); // Update the table display initially
     });
   </script>
 </body>
 </html>
+
 
 
 

@@ -34,6 +34,8 @@
 
   <script>
     // Add your JavaScript code here
+    
+    // Function to show an alert with the selected file name when uploading
     function showAlert() {
       const fileInput = document.getElementById('csvFileInput');
       const originalFileName = fileInput.files[0].name;
@@ -41,15 +43,18 @@
       return originalFileName;
     }
 
+    // Function to show an alert for successful file deletion
     function alertDel() {
       alert("File deleted successfully!");
     }
 
+    // Function to edit the file name
     function editFileName(fileName) {
       const newFileName = prompt('Enter a new name for the file:', fileName);
       if (newFileName !== null && newFileName.trim() !== '') {
         // Send an AJAX request to update the file name on the server-side
         // You can use fetch or XMLHttpRequest here to send the request
+        
         // Example using fetch:
         fetch(`/rename/${fileName}`, {
           method: 'PUT',
