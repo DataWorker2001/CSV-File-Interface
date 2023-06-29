@@ -9,21 +9,23 @@ This project is a CSV file manager that allows you to upload CSV files, view the
 Setup
 To set up the project on your local system, follow the steps below:
 
-Clone the repository or download the project files.
+1) Clone the repository or download the project files.
 
-Make sure you have Node.js installed on your system.
+2) Make sure you have Node.js installed on your system.
 
-Open a terminal and navigate to the project directory.
+3) Open a terminal and navigate to the project directory.
 
-Install the dependencies by running the following command:
-
+4) Install the dependencies by running the following command:
 $shell</br>
 npm install</br>
-Start the server by running the following command:
 
+5) Start the server by running the following command:
 $shell</br>
 node server.js</br>
-Open your web browser and visit http://localhost:3000 to access the application.
+
+6) Open your web browser and visit http://localhost:3000 to access the application.
+
+
 
 Folder Structure:- </br>
 The project follows a scalable folder structure to separate the models, controllers, and routes. Here's an overview of the folder structure:
