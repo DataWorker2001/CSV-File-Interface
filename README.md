@@ -67,7 +67,9 @@ Pagination controls are displayed at the bottom of the table, allowing the user 
 
 3) Chart Integration (Super Duper Extra Points):</br>
 The project integrates a charting library (e.g., Google Charts, D3.js).
-You can select a column from the CSV data and visualize it using the charting library.
+A column is randomly and dynamically automatically selected from the CSV data and visualized using the charting library for plotting frequency distribution for the values of that specific column.
+
+
 Please note that the sorting feature is not covered in this README, but it can be implemented by adding buttons or icons for each column header and implementing JavaScript code to handle the sorting functionality.</br>
 
 Feel Free to contribute to this Repository and make any modifications by creating a new Fork Request. Any contributions or modifications are openly welcomed. Happy Coding!
